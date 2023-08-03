@@ -15,7 +15,7 @@ const authenticate = async () =>{
 const app = express()
 app.use(express.json())
 
-app.use(cors())
+app.use( cors() )
 
 app.post('/login', async(req,res) => {
 
@@ -95,10 +95,10 @@ app.post('/register',async(req,res) => {
 
 })
 
-
-app.listen(5000,() =>{
-    console.log('App being listend to port:', 5000)
-})
+const port = 3000
+app.listen(port, "0.0.0.0", function () {
+    console.log('Listening to port', port)
+  });
 
 
 authenticate()
