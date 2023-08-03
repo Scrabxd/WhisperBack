@@ -5,6 +5,12 @@ const bcrypt = require('bcrypt')
 const {Op} = require('sequelize')
 
 const User = require('./models/userModel')
+const db = require('./db/db')
+
+const authenticate = async () =>{
+   await db.authenticate()
+}
+
 
 const app = express()
 app.use(express.json())
@@ -24,7 +30,7 @@ app.post('/login', async(req,res) => {
 
         if(!findUser){
             return res.json({
-                msg:'Usuario no existente'
+                msg:'Usuario no existentew'
             })
         }
     
@@ -93,3 +99,6 @@ app.post('/register',async(req,res) => {
 app.listen(5000,() =>{
     console.log('App being listend to port:', 5000)
 })
+
+
+authenticate()
