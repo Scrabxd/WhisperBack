@@ -6,6 +6,7 @@ const {Op} = require('sequelize')
 
 const User = require('./models/userModel')
 const db = require('./db/db')
+const {transporter} = require('./helpers/mailer')
 
 const authenticate = async () =>{
    await db.authenticate()
@@ -92,6 +93,37 @@ app.post('/register',async(req,res) => {
             msg:'Error haciendo register'
         })
     }
+
+})
+
+
+app.post('/mailer', async(req,res) =>{
+
+    const {firstName, lastName, email, message } = req.body
+
+    try {
+        await transporter.sendMail({
+            from: email,
+            to:'whispermailer@gmail.com',
+            subject:`Contact US message from ${firstName} ${lastName}`,
+            text:message
+        },
+        (error,info) => {
+            if(error){
+                return res.json({msg:'Error al enviar el correo'})
+            }
+            return res.json({msg:`Correo enviado con exito ${info.response}`})
+        }
+        )
+
+        
+    } catch (error) {
+        console.log(error)
+        return res.json({
+            msg:'Error mandando mail.'
+        })
+    }
+
 
 })
 
